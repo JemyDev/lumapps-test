@@ -1,25 +1,43 @@
 {
-    "extends": [
-      "airbnb",
-      "airbnb/hooks",
-      "eslint:recommended",
-      "react-app"
+  "plugins": ["prettier", "react", "@typescript-eslint"],
+  "extends": [
+    "airbnb",
+    "airbnb/hooks",
+    "eslint:recommended",
+    "react-app",
+    "./node_modules/kcd-scripts/eslint.js",
+    "plugin:@typescript-eslint/eslint-recommended",
+    "plugin:@typescript-eslint/recommended",
+    "prettier/@typescript-eslint"
+  ],
+  "env": {
+    "browser": true,
+    "commonjs": true,
+    "node": true,
+    "es6": true
+  },
+  "parserOptions": {
+    "ecmaVersion": 2018,
+    "sourceType": "module"
+  },
+  "rules": {
+    "curly": "warn",
+    "prettier/prettier": "error",
+    "react/jsx-filename-extension": [
+      1,
+      { "extensions": [".js", ".jsx", ".tsx"] }
     ],
-    "env": {
-      "browser": true,
-      "commonjs": true,
-      "node": true,
-      "es6": true
-    },
-    "parserOptions": {
-      "ecmaVersion": 2018,
-      "sourceType": "module"
-    },
-    "rules": {
-      "curly": "warn",
-	  "react/jsx-indent": [2, "tab"],
-	  "react/jsx-indent-props": [2, "tab"],
-	  "no-tabs": "off",
-	  "max-len": "off"
+    "react/jsx-indent": [2, "tab"],
+    "react/jsx-indent-props": [2, "tab"],
+    "no-tabs": "off",
+    "max-len": "off"
+  },
+  "settings": {
+    "import/resolver": {
+      "node": {
+        "extensions": [".js", ".jsx", ".ts", ".tsx"],
+        "paths": ["src"]
+      }
     }
   }
+}
