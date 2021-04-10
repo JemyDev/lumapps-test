@@ -21,7 +21,7 @@ export interface CharacterResultRaw {
   };
 }
 
-export interface CharacterResult {
+export interface Character {
   id: number;
   name: string;
   description: string;
