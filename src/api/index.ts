@@ -1,4 +1,4 @@
-import axios, { AxiosInstance } from 'axios';
+import axios, { AxiosInstance, AxiosResponse } from 'axios';
 
 const instance: AxiosInstance = axios.create({
   baseURL: 'https://gateway.marvel.com/v1/public/',
@@ -9,11 +9,13 @@ const baseQueryParams = {
   apikey: process.env.REACT_APP_MARVEL_API_KEY,
 };
 
-const get = (url: string, query: any): Promise<AxiosInstance> => instance.get(url, {
-  params: {
-    ...query,
-    ...baseQueryParams,
-  },
-});
+function get<T>(url: string, query: any): Promise<AxiosResponse<T>> {
+  return instance.get(url, {
+    params: {
+      ...query,
+      ...baseQueryParams,
+    },
+  });
+};
 
 export { instance as api, get };

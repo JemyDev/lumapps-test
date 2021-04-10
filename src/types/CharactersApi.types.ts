@@ -10,3 +10,20 @@ export interface CharactersQueryParams {
   limit?: number;
   offset?: number;
 }
+
+export interface CharacterResultRaw {
+  id: number;
+  name: string;
+  description: string;
+  thumbnail: {
+    path: string;
+    extension: string;
+  };
+}
+
+export interface CharacterResult {
+  id: number;
+  name: string;
+  description: string;
+  thumbnail: string;
+}
