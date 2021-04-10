@@ -6,8 +6,9 @@ import {
   Switch,
   Route,
 } from 'react-router-dom';
-import Header from 'components/Header';
-import Search from 'components/Search';
+import Header from 'components/Header/Header';
+import Search from 'containers/Search/Search';
+import { Routes } from 'types/Routes.types';
 
 function App() {
   return (
@@ -17,7 +18,7 @@ function App() {
 			<Switch>
 				<Route
 					exact
-					path="/"
+					path={Routes.Search}
 				>
 					<Search />
 				</Route>
