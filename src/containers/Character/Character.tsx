@@ -1,11 +1,24 @@
 import React, { FC } from 'react';
-import { useParams } from 'react-router-dom';
+import { Message, MessageKind } from '@lumx/react';
+
+import { useMarvelCharacter } from 'hooks/useMarvelCharacter';
 
 const Character: FC = () => {
-  const { id } = useParams<{ id: string }>();
+  const { character, error, loading } = useMarvelCharacter();
+
+  if(error) {
+    return (
+      <Message
+        kind={MessageKind.error}
+        hasBackground
+      >
+        <p>{error}</p>
+      </Message>
+    );
+  }
 
   return (
-    <div>{id}</div>
+    <div>{JSON.stringify(character)}</div>
   );
 }
 
