@@ -9,6 +9,7 @@ import {
 import Header from 'components/Header/Header';
 import Search from 'containers/Search/Search';
 import { Routes } from 'types/Routes.types';
+import Character from 'containers/Character/Character';
 
 function App() {
   return (
@@ -21,6 +22,12 @@ function App() {
 					path={Routes.Search}
 				>
 					<Search />
+				</Route>
+				<Route
+					exact
+					path={Routes.Character}
+				>
+					<Character />
 				</Route>
 			</Switch>
 		</Router>

@@ -5,7 +5,6 @@ import { Alignment, FlexBox, Message, MessageKind, Orientation } from '@lumx/rea
 import { useMarvelCharacters } from 'hooks/useMarvelCharacters';
 import CharacterCard from 'containers/Search/CharacterCard/CharacterCard';
 import Loading from 'components/Loading/Loading';
-import './search.scss';
 
 const Search: FC = () => {
 	const { searchCharacters, characters, error, loading } = useMarvelCharacters();
