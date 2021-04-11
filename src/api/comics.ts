@@ -15,6 +15,17 @@ import { formatDate } from 'utils/formatDate';
 
 type ComicsData = ApiResponse<ComicResultRaw>;
 
+export async function getComics(url: string, limit: number): Promise<Comic[]> {
+  const { data: comicsData } = await get<ComicsData>(url, { limit });
+
+  return comicsData.data.results.map((comic) => ({
+    title: comic.title,
+    prices: parsePricesPerComic(comic.prices),
+    dates: parseDatesPerComic(comic.dates),
+  }));
+}
+
+// Utility functions
 function parsePricesPerComic(prices: ComicPriceRaw[]): ComicPrice[] {
   return prices.map((priceData) => {
     let result = {} as ComicPrice;
@@ -63,14 +74,4 @@ function parseDatesPerComic(dates: ComicDateRaw[]): ComicDate[] {
 
     return result;
   }).filter((obj) => Object.keys(obj).length !== 0);
-}
-
-export async function getComics(url: string, limit: number): Promise<Comic[]> {
-  const { data: comicsData } = await get<ComicsData>(url, { limit });
-
-  return comicsData.data.results.map((comic) => ({
-    title: comic.title,
-    prices: parsePricesPerComic(comic.prices),
-    dates: parseDatesPerComic(comic.dates),
-  }));
 }

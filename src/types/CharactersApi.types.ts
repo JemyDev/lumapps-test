@@ -6,7 +6,7 @@ export enum CharacterUrlType {
   ComicLink = 'comiclink',
 }
 
-export interface CharacterUrls {
+export interface CharacterUrl {
   detail?: string;
   wiki?: string;
   comicLink?: string;
@@ -57,5 +57,5 @@ export type CharacterProfile = {
     available: number;
     items: Comic[];
   };
-  urls: CharacterUrls[];
+  urls: CharacterUrl[];
 } & Character;

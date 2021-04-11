@@ -4,7 +4,7 @@ import {
   Character,
   CharacterProfileRaw,
   CharacterProfile,
-  CharacterUrls,
+  CharacterUrl,
   CharacterUrlsRaw,
   CharacterUrlType,
 } from 'types/CharactersApi.types';
@@ -15,27 +15,15 @@ import { getComics } from './comics';
 type CharactersData = ApiResponse<CharacterResultRaw>;
 type CharacterProfileData = ApiResponse<CharacterProfileRaw>;
 
-function parseUrlsCharacters (urls: CharacterUrlsRaw[]): CharacterUrls[] {
-  return urls.map((characterUrl) => ({
-    detail: characterUrl.type === CharacterUrlType.Detail ? characterUrl.url : undefined,
-    wiki: characterUrl.type === CharacterUrlType.Wiki ? characterUrl.url : undefined,
-    comicLink: characterUrl.type === CharacterUrlType.ComicLink ? characterUrl.url : undefined,
-  }));
-}
-
-export async function getCharacters (params?: CharactersQueryParams): Promise<Character[]> {
+export async function getCharacters(params?: CharactersQueryParams): Promise<Character[]> {
   const { data: charactersData } = await get<CharactersData>('characters', params);
 
-  return charactersData.data.results.map((character) => {
-    const description = character.description.trim().length > 0 ? character.description : 'No description available';
-
-    return {
-      id: character.id,
-      description,
-      name: character.name,
-      thumbnail: `${character.thumbnail.path}.${character.thumbnail.extension}`,
-    }
-  });
+  return charactersData.data.results.map((character) => ({
+    id: character.id,
+    description: setDescription(character.description),
+    name: character.name,
+    thumbnail: `${character.thumbnail.path}.${character.thumbnail.extension}`,
+  }));
 }
 
 export async function getCharacter(characterId: string, comicLimit: number): Promise<CharacterProfile> {
@@ -47,7 +35,7 @@ export async function getCharacter(characterId: string, comicLimit: number): Pro
     return {
       id: character.id,
       name: character.name,
-      description: character.description,
+      description: setDescription(character.description),
       thumbnail: `${character.thumbnail.path}.${character.thumbnail.extension}`,
       comics: {
         available: character.comics.available,
@@ -56,4 +44,17 @@ export async function getCharacter(characterId: string, comicLimit: number): Pro
       urls: parseUrlsCharacters(character.urls),
     }
   })[0];
+}
+
+// Utility functions
+function parseUrlsCharacters (urls: CharacterUrlsRaw[]): CharacterUrl[] {
+  return urls.map((characterUrl) => ({
+    detail: characterUrl.type === CharacterUrlType.Detail ? characterUrl.url : undefined,
+    wiki: characterUrl.type === CharacterUrlType.Wiki ? characterUrl.url : undefined,
+    comicLink: characterUrl.type === CharacterUrlType.ComicLink ? characterUrl.url : undefined,
+  }));
+}
+
+function setDescription(description: string) {
+  return description.trim().length > 0 ? description : 'No description available';
 }
