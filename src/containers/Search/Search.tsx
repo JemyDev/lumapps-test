@@ -5,6 +5,7 @@ import { Alignment, FlexBox, Message, MessageKind, Orientation } from '@lumx/rea
 import { useMarvelCharacters } from 'hooks/useMarvelCharacters';
 import CharacterCard from 'containers/Search/CharacterCard/CharacterCard';
 import Loading from 'components/Loading/Loading';
+import './search.scss';
 
 const Search: FC = () => {
 	const { searchCharacters, characters, error, loading } = useMarvelCharacters();
@@ -39,15 +40,17 @@ const Search: FC = () => {
 	}
 
 	return (
-		<section className="lumx-spacing-padding-horizontal-huge">
+		<FlexBox
+			className="lumx-spacing-padding-horizontal-huge"
+			vAlign={Alignment.center}
+		>
 			{loading ? (
 				<Loading />
 			) : (
 				<FlexBox
 					className="characters-list"
-					marginAuto={[Alignment.left, Alignment.right]}
-					orientation={Orientation.vertical}
 				>
+					<h1 className="lumx-spacing-margin-vertical-huge lumx-typography-display1">Characters list</h1>
 					{characters?.map((character) => (
 						<CharacterCard
 							key={character.id}
@@ -56,7 +59,7 @@ const Search: FC = () => {
 					))}
 				</FlexBox>
 			)}
-		</section>
+		</FlexBox>
 	);
 }
 

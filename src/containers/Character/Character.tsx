@@ -1,15 +1,17 @@
 import React, { FC } from 'react';
-import { Link } from 'react-router-dom';
-import { FlexBox, Message, MessageKind, Size, Avatar, Alignment } from '@lumx/react';
+import { useHistory } from 'react-router-dom';
+import { FlexBox, Message, MessageKind, Size, Avatar, Alignment, Link, Orientation } from '@lumx/react';
 
 import { useMarvelCharacter } from 'hooks/useMarvelCharacter';
 import Loading from 'components/Loading/Loading';
 import ListUrls from 'containers/Character/ListUrls/ListUrls';
 import ListComics from 'containers/Character/ListComics/ListComics';
-import { Routes } from 'types/Routes.types';
+import './character.scss';
 
 const Character: FC = () => {
   const { character, error, loading } = useMarvelCharacter();
+  const history = useHistory();
+  // const querySearchTerm = useSearchTerm();
 
   if(error) {
     return (
@@ -31,11 +33,11 @@ const Character: FC = () => {
           className="lumx-spacing-margin-top-huge"
           hAlign={Alignment.top}
           vAlign={Alignment.center}
+          orientation={Orientation.horizontal}
+          wrap
         >
-          <article className="lumx-spacing-margin-right-huge" style={{ maxWidth: 800 }}>
-            <Link
-              to={Routes.Search}
-            >Back to result</Link>
+          <article className="character-content lumx-spacing-margin-right-huge">
+            <Link onClick={onClickBack}>Back to result</Link>
             <h1 className="lumx-typography-display1 lumx-spacing-margin-vertical-huge">{character?.name}</h1>
             <p className="lumx-typography-body2">{character?.description}</p>
             <div className="lumx-spacing-margin-top-huge">
@@ -43,13 +45,15 @@ const Character: FC = () => {
               <ListUrls urls={character.urls} />
             </div>
           </article>
-          <aside style={{ maxWidth: 400 }}>
-            <Avatar
-              size={Size.xxl}
-              image={character.thumbnail}
-              className="lumx-spacing-margin-bottom-huge"
-              alt={character.name}
-            />
+          <aside className="character-profile" style={{ maxWidth: 400 }}>
+            <FlexBox vAlign={Alignment.center}>
+              <Avatar
+                size={Size.xxl}
+                image={character.thumbnail}
+                className="lumx-spacing-margin-bottom-huge"
+                alt={character.name}
+              />
+            </FlexBox>
             <div>
               <h3 className="lumx-typography-title" style={{ textAlign: 'center' }}>Latest comics</h3>
               <ListComics comics={character.comics.items} />
@@ -60,6 +64,10 @@ const Character: FC = () => {
       )}
     </section>
   );
+
+  function onClickBack() {
+    history.goBack();
+  }
 }
 
 export default Character;

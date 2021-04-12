@@ -1,8 +1,7 @@
 import React, { FC, FormEvent, useState } from 'react';
 import { TextField, Theme } from '@lumx/react';
 import { mdiMagnify } from '@lumx/icons';
-import { useHistory, useParams } from 'react-router-dom';
-import { Routes } from 'types/Routes.types';
+import { useHistory } from 'react-router-dom';
 
 const SearchField: FC = () => {
 	const [searchTerm, setSearchTerm] = useState<string>('');
@@ -33,7 +32,7 @@ const SearchField: FC = () => {
 			params.delete('searchTerm');
 		}
 
-		history.push(`/?${params.toString()}`);
+		history.push(`/?${params.toString()}`, { searchTerm });
 	}
 }
 
